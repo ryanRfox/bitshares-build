@@ -1,0 +1,24 @@
+# install elasticsearch, kibana and libcurl4-openssl-dev
+wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+sudo apt-get install apt-transport-https
+echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
+sudo apt-get update && sudo apt-get install elasticsearch kibana libcurl4-openssl-dev
+
+# Optional: Modify the elasticsearch data and log file path
+# mv /var/lib/elasticsearch/ /home/data/
+# mv /var/log/elasticsearch/ /home/log/
+# vi /etc/elasticsearch/elasticsearch.yml
+#   path.data: /home/data/elasticsearch
+#   path.log: /home/log/elasticsearch
+# vi /etc/elasticsearch/jvm.options
+#   Search/replace /var/log/..
+
+
+# Recommended: Modify memory usage for the Java VM to fit your servers physical memory
+# vi /etc/elasticsearch/jvm.options
+# Set values for both: -Xms1g and -Xmx1g
+# Default is 1g RAM allocated to the Java VM. Set up to 31g if your server has capacity.
+
+# Start elasticsearch and kibana services
+service start elasticsearch
+service state kibana
